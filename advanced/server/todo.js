@@ -19,8 +19,10 @@ class Todo {
 }
 
 router.post("/", (req, res, next) => {
+  console.log(req)
   const id = todoList.length ? todoList[todoList.length - 1].id + 1 : 0;
   const item = new Todo(id, req.body.name, false);
+  console.log(item, req.body)
   todoList.push(item);
   return res.status(201).send(item);
 });

@@ -1,8 +1,23 @@
 import Todo from './domain/todo.js'
+
 const subscribeEvent = () => {
   const registerBtn = document.querySelector("input.todo-form__submit")
   registerBtn.addEventListener('click', (e) => {
+    const name = document.getElementById("name")
+    const data = {
+      name: name.value
+    }
+    console.log(name.value)
+    const res = fetch("http://localhost:3000/todo", {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data),
+    }).then(res => console.log(res))
     e.preventDefault()
+
+    // insertTodo()
   })
 }
 
