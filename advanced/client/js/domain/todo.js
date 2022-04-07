@@ -17,7 +17,13 @@ class Todo {
         return this.#name
     }
 
+    /**
+     * @throws {"名前は1文字以上である必要があります"}
+     */
     set name(value) {
+        if (value.length < 1) {
+            throw new Error("名前は1文字以上である必要があります")
+        }
         this.#name = value
     }
 

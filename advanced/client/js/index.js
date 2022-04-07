@@ -40,11 +40,16 @@ const main = () => {
         nameInput.focus()
 
         nameInput.addEventListener('blur', () => {
-          nameLabel.style.display = ''
-          nameInput.style.display = 'none'
-          nameLabel.innerText = nameInput.value
-          todo.name = nameInput.value
-          api.updateTodo(todo)
+          try {
+            todo.name = nameInput.value
+            nameLabel.style.display = ''
+            nameInput.style.display = 'none'
+            nameLabel.innerText = nameInput.value
+
+            api.updateTodo(todo)
+          } catch (error) {
+            console.log(error)
+          }
         })
       })
 
