@@ -29,7 +29,7 @@ const insertTodo = (dom, todo) => {
           data-todo-id="${todo.id}"
           type="checkbox"
           class="todo-toggle"
-          value="${todo.done? "checked" : "false"}"
+          ${todo.done? "checked" : ""}
         />
         <span class="todo-toggle__checkmark"></span>
       </label>
