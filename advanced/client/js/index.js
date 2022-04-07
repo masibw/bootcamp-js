@@ -39,7 +39,7 @@ const insertTodo = (dom, todo) => {
   const li = document.createElement('li')
   li.className = "todo-item";
   li.innerHTML = template;
-  li.getElementsByClassName("todo-name")[0].innerText = todo.name
+  li.querySelector(".todo-name").innerText = todo.name
   dom.appendChild(li)
 }
 
