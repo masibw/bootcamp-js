@@ -26,7 +26,6 @@ class API {
         },
         body: JSON.stringify(data),
         }).then(res => res.json())
-        console.log(res)
         return res
     }
 }
