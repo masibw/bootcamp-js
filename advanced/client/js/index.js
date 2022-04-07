@@ -1,76 +1,28 @@
-import Todo from './domain/todo.js'
+import Todo from './domain/Todo.js'
+import Presenter from './presenter/Presenter.js'
+import API from './api/API.js'
 
-const subscribeEvent = () => {
+const subscribeEvent = (presenter, api) => {
   const registerBtn = document.querySelector("input.todo-form__submit")
   registerBtn.addEventListener('click', (e) => {
-    const name = document.getElementById("name")
-    const data = {
-      name: name.value
-    }
-    console.log(name.value)
-    const res = fetch("http://localhost:3000/todo", {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data),
-    }).then(res => console.log(res))
-    e.preventDefault()
+   api.postTodo(document.getElementById("name")).then((res) => presenter.insert(new Todo(res.id, res.name, res.done)))
+   e.preventDefault()
 
     // insertTodo()
   })
 }
 
-const clearExistingTodos = (dom) => {
-  while(dom.firstChild){
-    dom.removeChild(dom.firstChild);
-  }
-}
-
-const fetchTodos = async (url) => {
-    const res = await fetch(url,{
-      headers: {
-        "Content-Type": "application/json",
-      }
-    }).then((res) => res.json())
-    
-  return  res.todoList
-}
-
-const insertTodo = (dom, todo) => {
-  const template = 
-  `<label class="todo-toggle__container">
-        <input
-          data-todo-id="${todo.id}"
-          type="checkbox"
-          class="todo-toggle"
-          ${todo.done? "checked" : ""}
-        />
-        <span class="todo-toggle__checkmark"></span>
-      </label>
-      <div class="todo-name"></div>
-      <div data-todo-id="${todo.id}" class="todo-remove-button">x</div>
-  `
-  const li = document.createElement('li')
-  li.className = "todo-item";
-  li.innerHTML = template;
-  li.querySelector(".todo-name").innerText = todo.name
-  dom.appendChild(li)
-}
-
-const presentTodos = (dom, todos) => {
-  todos.forEach(todo => {
-      insertTodo(dom, new Todo(todo.id, todo.name, todo.done))
-  })
-}
-
 const main = () => {
   const serverEndpoint = "http://localhost:3000/todo"
-  subscribeEvent();
-  const todoListDom = document.querySelector("ul.todos")
-  clearExistingTodos(todoListDom)
-  fetchTodos(serverEndpoint).then((todos)=>{
-    presentTodos(todoListDom, todos)
+  const presenter = new Presenter(document.querySelector("ul.todos"))
+  presenter.clear()
+
+  const api = new API(serverEndpoint)
+  subscribeEvent(presenter, api);
+  api.fetchTodos(serverEndpoint).then((todos)=>{
+    todos.forEach(todo => {
+      presenter.insert(new Todo(todo.id, todo.name, todo.done))
+    })
   })
 };
 
