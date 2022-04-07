@@ -12,13 +12,14 @@ class Presenter {
                 <input
                 data-todo-id="${todo.id}"
                 type="checkbox"
+                id="todo-toggle"
                 class="todo-toggle"
                 ${todo.done ? "checked" : ""}
                 />
                 <span class="todo-toggle__checkmark"></span>
             </label>
             <div class="todo-name"></div>
-            <div data-todo-id="${todo.id}" class="todo-remove-button">x</div>
+            <div data-todo-id="${todo.id}" id="todo-remove-button" class="todo-remove-button">x</div>
         `
         const li = document.createElement('li')
         li.className = "todo-item";
@@ -32,6 +33,10 @@ class Presenter {
         while (this.#todoList.firstChild) {
             this.#todoList.removeChild(this.#todoList.firstChild);
         }
+    }
+
+    delete(dom) {
+        dom.parentNode.removeChild(dom)
     }
 }
 

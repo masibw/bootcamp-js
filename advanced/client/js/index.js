@@ -20,9 +20,14 @@ const main = () => {
     const todos = res.map((todo) => new Todo(todo.id, todo.name, todo.done))
     todos.forEach(todo => {
       const todoDom = presenter.insert(new Todo(todo.id, todo.name, todo.done))
-      todoDom.querySelector(`[data-todo-id="${todo.id}"]`).addEventListener("change", (e) => {
+      todoDom.querySelector(`#todo-toggle`).addEventListener("change", (e) => {
         todo.done = e.target.checked
         api.updateTodo(todo)
+      })
+
+      todoDom.querySelector(`#todo-remove-button`).addEventListener("click", (e) => {
+        api.deleteTodo(todo)
+        presenter.delete(todoDom)
       })
     })
   })
