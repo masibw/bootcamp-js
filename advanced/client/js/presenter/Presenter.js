@@ -2,18 +2,18 @@ class Presenter {
 
     #todoList
 
-    constructor(todoList){
+    constructor(todoList) {
         this.#todoList = todoList
     }
 
-    insert(todo){
-        const template = 
-        `<label class="todo-toggle__container">
+    insert(todo) {
+        const template =
+            `<label class="todo-toggle__container">
                 <input
                 data-todo-id="${todo.id}"
                 type="checkbox"
                 class="todo-toggle"
-                ${todo.done? "checked" : ""}
+                ${todo.done ? "checked" : ""}
                 />
                 <span class="todo-toggle__checkmark"></span>
             </label>
@@ -24,13 +24,14 @@ class Presenter {
         li.className = "todo-item";
         li.innerHTML = template;
         li.querySelector(".todo-name").innerText = todo.name
-        this.#todoList.appendChild(li)  
+        this.#todoList.appendChild(li)
+        return li
     }
 
-    clear(){
-        while(this.#todoList.firstChild){
+    clear() {
+        while (this.#todoList.firstChild) {
             this.#todoList.removeChild(this.#todoList.firstChild);
-          }
+        }
     }
 }
 

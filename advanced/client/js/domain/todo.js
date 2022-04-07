@@ -4,24 +4,20 @@ class Todo {
     #done
 
     constructor(id, name, done) {
-      this.#id = id;
-      this.#name = name;
-      this.#done = done;
+        this.#id = id;
+        this.#name = name;
+        this.#done = done;
     }
-  
-    get id(){
+
+    get id() {
         return this.#id
     }
 
-    set id(value){
-        this.#id = value
-    }
-
-    get name(){
+    get name() {
         return this.#name
     }
 
-    set name(value){
+    set name(value) {
         this.#name = value
     }
 
@@ -32,6 +28,6 @@ class Todo {
     set done(value) {
         this.#done = value
     }
-  }
+}
 
-  export default Todo;
+export default Todo;

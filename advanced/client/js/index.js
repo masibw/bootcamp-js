@@ -5,10 +5,8 @@ import API from './api/API.js'
 const subscribeEvent = (presenter, api) => {
   const registerBtn = document.querySelector("input.todo-form__submit")
   registerBtn.addEventListener('click', (e) => {
-   api.postTodo(document.getElementById("name")).then((res) => presenter.insert(new Todo(res.id, res.name, res.done)))
-   e.preventDefault()
-
-    // insertTodo()
+    api.postTodo(document.getElementById("name")).then((res) => presenter.insert(new Todo(res.id, res.name, res.done)))
+    e.preventDefault()
   })
 }
 
@@ -18,12 +16,17 @@ const main = () => {
   presenter.clear()
 
   const api = new API(serverEndpoint)
-  subscribeEvent(presenter, api);
-  api.fetchTodos(serverEndpoint).then((todos)=>{
+  api.fetchTodos(serverEndpoint).then((res) => {
+    const todos = res.map((todo) => new Todo(todo.id, todo.name, todo.done))
     todos.forEach(todo => {
-      presenter.insert(new Todo(todo.id, todo.name, todo.done))
+      const todoDom = presenter.insert(new Todo(todo.id, todo.name, todo.done))
+      todoDom.querySelector(`[data-todo-id="${todo.id}"]`).addEventListener("change", (e) => {
+        todo.done = e.target.checked
+        api.updateTodo(todo)
+      })
     })
   })
+  subscribeEvent(presenter, api);
 };
 
 main();
