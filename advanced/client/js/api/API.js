@@ -43,6 +43,13 @@ class API {
         }).then(res => res.json())
         return res
     }
+
+    async deleteTodo(todo) {
+        const res = await fetch(`http://localhost:3000/todo/${todo.id}`, {
+            method: 'DELETE',
+        })
+        return res
+    }
 }
 
 export default API;
