@@ -29,6 +29,25 @@ const main = () => {
         api.deleteTodo(todo)
         presenter.delete(todoDom)
       })
+
+      const nameLabel = todoDom.querySelector('#todo-name-label')
+
+      nameLabel.addEventListener('click', () => {
+        nameLabel.style.display = 'none'
+        const nameInput = todoDom.querySelector("#todo-name-input")
+        nameInput.style.display = ''
+        nameInput.value = nameLabel.innerText
+        nameInput.focus()
+
+        nameInput.addEventListener('blur', () => {
+          nameLabel.style.display = ''
+          nameInput.style.display = 'none'
+          nameLabel.innerText = nameInput.value
+          todo.name = nameInput.value
+          api.updateTodo(todo)
+        })
+      })
+
     })
   })
   subscribeEvent(presenter, api);

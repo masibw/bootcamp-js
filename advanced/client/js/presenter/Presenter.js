@@ -18,13 +18,14 @@ class Presenter {
                 />
                 <span class="todo-toggle__checkmark"></span>
             </label>
-            <div class="todo-name"></div>
+            <input type="text" id="todo-name-input" class="todo-name" style="display:none;"></input>
+            <div id="todo-name-label" class="todo-name"></div>
             <div data-todo-id="${todo.id}" id="todo-remove-button" class="todo-remove-button">x</div>
         `
         const li = document.createElement('li')
         li.className = "todo-item";
         li.innerHTML = template;
-        li.querySelector(".todo-name").innerText = todo.name
+        li.querySelector("#todo-name-label").innerText = todo.name
         this.#todoList.appendChild(li)
         return li
     }
